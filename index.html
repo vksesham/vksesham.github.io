@@ -1,181 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vamsi Krishna Sesham (vksesham)</title>
-    <!-- Tailwind CSS CDN -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vamsi Krishna Sesham (vksesham) — Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts for pixelated text -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
     <style>
-        /* Custom styles for retro game aesthetic */
         body {
-            font-family: 'Press Start 2P', cursive; /* Apply pixelated font to body */
-            background-color: #2c3e50; /* Dark blue-grey background */
+            font-family: 'Press Start 2P', cursive;
+            background-color: #2c3e50;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* Full viewport height */
+            min-height: 100vh;
             margin: 0;
-            padding: 20px; /* Add some padding around the content */
-            box-sizing: border-box; /* Include padding in element's total width and height */
-            overflow-y: scroll; /* Allow scrolling for body */
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: scroll;
         }
-
-        .pixel-font {
-            font-family: 'Press Start 2P', cursive;
-        }
-
+        .pixel-font { font-family: 'Press Start 2P', cursive; }
         .title-container {
-            background-color: #1a202c; /* Darker header background */
+            background-color: #1a202c;
             padding: 1rem 2rem;
-            border: 4px solid #fbd38d; /* Gold-orange border */
-            box-shadow: 8px 8px 0px 0px #8b5e1c; /* Pixelated shadow */
+            border: 4px solid #fbd38d;
+            box-shadow: 8px 8px 0px 0px #8b5e1c;
             margin-bottom: 2rem;
             border-radius: 10px;
-            text-decoration: none; /* Remove underline from the anchor tag */
-            color: inherit; /* Inherit color from parent to avoid blue link text */
-            display: block; /* Make the anchor tag a block element to contain the div */
-            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out; /* Smooth transition for hover */
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
         }
-
-        .title-container:hover {
-            transform: translate(-3px, -3px); /* Move up-left on hover */
-            box-shadow: 11px 11px 0px 0px #8b5e1c; /* Larger shadow on hover */
-        }
-
+        .title-container:hover { transform: translate(-3px, -3px); box-shadow: 11px 11px 0px 0px #8b5e1c; }
         .project-block {
-            background-color: #4a5568; /* Grey-blue block background */
-            border: 3px solid #cbd5e0; /* Light grey border */
-            box-shadow: 6px 6px 0px 0px #2d3748; /* Darker shadow */
-            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out; /* Smooth transition for hover */
-            border-radius: 8px; /* Slightly rounded corners for blocks */
-            min-height: 150px; /* Minimum height for blocks */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            text-decoration: none; /* Remove underline from links */
-            color: #e2e8f0; /* Light text color */
-            cursor: pointer; /* Indicate clickability */
+            background-color: #4a5568;
+            border: 3px solid #cbd5e0;
+            box-shadow: 6px 6px 0px 0px #2d3748;
+            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+            border-radius: 8px;
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
+            text-align: left; color: #e2e8f0; cursor: pointer; overflow: hidden;
         }
-
-        .project-block:hover {
-            transform: translate(-3px, -3px); /* Move up-left on hover */
-            box-shadow: 9px 9px 0px 0px #2d3748; /* Larger shadow on hover */
-            background-color: #616e7f; /* Slightly lighter background on hover */
-        }
-
-        .project-block-title {
-            color: #f6ad55; /* Orange title for projects */
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 0px #8b5e1c; /* Text shadow for retro effect */
-        }
-
-        .project-block-description {
-            color: #cbd5e0; /* Light grey description text */
-            font-size: 0.75rem; /* Smaller font for description */
-            line-height: 1.2;
-        }
-
-        /* Modal specific styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black overlay */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000; /* Ensure it's on top of everything */
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background-color: #1a202c; /* Dark background for modal content */
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-            position: relative;
-            width: 90%; /* Max width for content */
-            max-width: 1920px; /* Adjust based on your iframe width */
-            height: 90%; /* Max height for content */
-            max-height: 1080px; /* Adjust based on your iframe height */
-            display: flex;
-            flex-direction: column;
-            border: 4px solid #fbd38d; /* Matching retro border */
-        }
-
-        .modal-iframe-container {
-            flex-grow: 1; /* Take up remaining space */
-            position: relative;
-            overflow: hidden; /* Hide overflow from iframe scrollbars */
-        }
-
-        .modal-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            overflow: hidden; /* Hide iframe scrollbars */
-        }
-
-        .modal-close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #e53e3e; /* Red button */
-            color: white;
-            border: 2px solid #a0aec0; /* Light border */
-            border-radius: 50%; /* Circular button */
-            width: 30px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 1001; /* Above iframe */
-            transition: background-color 0.2s ease-in-out, transform 0.1s ease-out;
-            font-family: 'Press Start 2P', cursive;
-            box-shadow: 2px 2px 0px 0px #7b341e; /* Pixelated shadow */
-        }
-
-        .modal-close-button:hover {
-            background-color: #c53030; /* Darker red on hover */
-            transform: scale(1.05); /* Slightly larger on hover */
-        }
-
-        /* Responsive adjustments for modal */
-        @media (max-width: 768px) {
-            .modal-content {
-                width: 95%;
-                height: 95%;
-            }
-            .modal-close-button {
-                width: 25px;
-                height: 25px;
-                font-size: 1rem;
-                top: 5px;
-                right: 5px;
-            }
-        }
+        .project-block:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0px 0px #2d3748; background-color: #616e7f; }
+        .project-thumb { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #2d3748; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .project-thumb img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+        .project-body { padding: 1rem; display: grid; gap: .5rem; }
+        .project-block-title { color: #f6ad55; text-shadow: 2px 2px 0px #8b5e1c; }
+        .project-block-description { color: #cbd5e0; font-size: 0.75rem; line-height: 1.3; }
+        .modal-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.8); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { background-color: #1a202c; padding: 10px; border-radius: 10px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); position: relative; width: 90%; max-width: 1920px; height: 90%; max-height: 1080px; display: flex; flex-direction: column; border: 4px solid #fbd38d; }
+        .modal-iframe-container, .modal-image-container { flex-grow: 1; position: relative; overflow: hidden; display: none; }
+        .modal-iframe { width: 100%; height: 100%; border: none; overflow: hidden; }
+        .modal-image { width: 100%; height: 100%; object-fit: contain; display: block; background:#000; }
+        .modal-close-button { position: absolute; top: 10px; right: 10px; background-color: #e53e3e; color: white; border: 2px solid #a0aec0; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; cursor: pointer; z-index: 1001; transition: background-color 0.2s ease-in-out, transform 0.1s ease-out; font-family: 'Press Start 2P', cursive; box-shadow: 2px 2px 0px 0px #7b341e; }
+        .modal-close-button:hover { background-color: #c53030; transform: scale(1.05); }
+        @media (max-width: 768px) { .modal-content { width: 95%; height: 95%; } .modal-close-button { width: 25px; height: 25px; font-size: 1rem; top: 5px; right: 5px; } }
     </style>
 </head>
 <body class="selection:bg-yellow-400 selection:text-black">
-    <!-- Main Title Section (now wrapped in an anchor tag) -->
-    <a href="https://github.com/vksesham" target="_blank" class="title-container">
+    <a href="https://github.com/vksesham" target="_blank" rel="noopener" class="title-container">
         <h1 class="pixel-font text-4xl sm:text-5xl lg:text-6xl text-white text-center tracking-wide uppercase">
             Vamsi Krishna Sesham (vksesham)
         </h1>
@@ -184,110 +70,114 @@
         </p>
     </a>
 
-    <!-- Projects Grid Section -->
-    <main id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
-        <!-- Project blocks will be dynamically loaded here by JavaScript -->
-    </main>
+    <main id="projects-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl"></main>
 
-    <!-- Modal Overlay for Embedded Content -->
-    <div id="project-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button id="modal-close" class="modal-close-button">X</button>
-            <div class="modal-iframe-container">
+    <div id="project-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-label="Project Preview">
+            <button id="modal-close" class="modal-close-button" aria-label="Close">X</button>
+            <div id="modal-iframe-wrap" class="modal-iframe-container">
                 <iframe id="modal-iframe" class="modal-iframe" src="" allowfullscreen="true" scrolling="no"></iframe>
+            </div>
+            <div id="modal-image-wrap" class="modal-image-container">
+                <img id="modal-image" class="modal-image" src="" alt="Project image preview" />
             </div>
         </div>
     </div>
 
     <script>
-        // Define project data
         const projects = [
-            {
-                title: "SmartCoin",
-                description: "Coin-sized device. Integrates UWB/BLE (ISP3080-UX) for precise positioning, BME690 4-in-1 environmental sensor, and ultra-low energy flash.",
-                type: "embed",
-                link: "https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=F92C8132-29F8-4192-BD90-7DB6DF94E32C&activeView=3D"
-            },
-            {
-                title: "nRF54L15 miniDevKit",
-                description: "The nRF54L15 miniDevKit is a high-performance, custom-designed development board featuring the Nordic Semiconductor nRF54L15 SoC designed in Altium Designer.",
-                type: "embed",
-                link: "https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=ED4A0AD6-383E-43F1-9697-7476525FDB97&activeView=3D"
-            },
-            {
-                title: "USB-C Gigabit Ethernet Adapter",
-                description: "Work-in-progress USB-C Gigabit Ethernet Adapter. Features LAN800 chip, USB-C connector, and RJ45 port. Designed for high-speed wired connectivity.",
-                type: "github",
-                link: "https://github.com/vksesham"
-            },
-            {
-                title: "Project placeholder",
-                description: "This is a placeholder for future projects. Stay tuned!",
-                type: "github",
-                link: "https://github.com/user6/vksesham-delta"
-            }
+            { title: "SmartCoin", description: "Coin-sized device with UWB/BLE (ISP3080-UX), BME690 environmental sensing, and ultra-low energy flash.", type: "embed", link: "https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=F92C8132-29F8-4192-BD90-7DB6DF94E32C&activeView=3D", image: "images/smartcoin.png" },
+            { title: "nRF54L15 miniDevKit", description: "Custom dev board featuring Nordic nRF54L15 SoC, designed in Altium Designer.", type: "embed", link: "https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=ED4A0AD6-383E-43F1-9697-7476525FDB97&activeView=3D", image: "images/nrf54_minidevkit.png" },
+            { title: "Self-Balancing Robot", description: "Two-wheeled robot with cascade PID, BLE control, and on-board sensing.", type: "image", link: "images/segway.png", image: "images/Segway.jpg" },
+            { title: "Fluidic Self-Assembly Automation Rig", description: "ESP32-S3-based FSA setup with heating, agitation control, and high-G accelerometry.", type: "image", link: "images/FSA.jpg", image: "images/FSA.jpg" },
+            { title: "USB-C Gigabit Ethernet Adapter", description: "WIP USB-C Gigabit Ethernet adapter with LAN8xx, USB-C, and RJ45 for wired connectivity.", type: "image", link: "images/placeholder.png", image: "images/placeholder.png" },
+            { title: "Project Placeholder", description: "Placeholder for future projects. Stay tuned!", type: "image", link: "images/placeholder.png", image: "images/placeholder.png" }
         ];
 
-        // Get DOM elements
         const projectsGrid = document.getElementById('projects-grid');
         const projectModal = document.getElementById('project-modal');
         const modalIframe = document.getElementById('modal-iframe');
+        const modalIframeWrap = document.getElementById('modal-iframe-wrap');
+        const modalImage = document.getElementById('modal-image');
+        const modalImageWrap = document.getElementById('modal-image-wrap');
         const modalCloseButton = document.getElementById('modal-close');
 
-        // Function to create and append project blocks
         function createProjectBlocks() {
-            projects.forEach(project => {
-                const projectBlock = document.createElement('div');
-                projectBlock.className = 'project-block px-4 py-6';
+            projects.forEach((project, idx) => {
+                const projectBlock = document.createElement('article');
+                projectBlock.className = 'project-block';
+                projectBlock.setAttribute('tabindex', '0');
+                projectBlock.setAttribute('role', 'button');
+                projectBlock.setAttribute('aria-label', `${project.title}`);
+
+                const thumb = document.createElement('div');
+                thumb.className = 'project-thumb';
+                const img = document.createElement('img');
+                img.loading = idx < 3 ? 'eager' : 'lazy';
+                img.decoding = 'async';
+                img.alt = project.title + ' thumbnail';
+                img.src = project.image;
+                thumb.appendChild(img);
+
+                const body = document.createElement('div');
+                body.className = 'project-body';
 
                 const titleElement = document.createElement('h2');
-                titleElement.className = 'pixel-font project-block-title text-2xl sm:text-3xl';
+                titleElement.className = 'pixel-font project-block-title text-xl sm:text-2xl';
                 titleElement.textContent = project.title;
 
                 const descriptionElement = document.createElement('p');
                 descriptionElement.className = 'pixel-font project-block-description';
                 descriptionElement.textContent = project.description;
 
-                projectBlock.appendChild(titleElement);
-                projectBlock.appendChild(descriptionElement);
+                body.appendChild(titleElement);
+                body.appendChild(descriptionElement);
 
-                if (project.type === "embed") {
-                    // If it's an embedded project, open the modal
-                    projectBlock.onclick = () => openModal(project.link);
-                } else {
-                    // If it's a GitHub link, open in a new tab
-                    projectBlock.onclick = () => window.open(project.link, '_blank');
+                projectBlock.appendChild(thumb);
+                projectBlock.appendChild(body);
+
+                if (project.type === 'embed') {
+                    projectBlock.addEventListener('click', () => openEmbed(project.link));
+                    projectBlock.addEventListener('keyup', (e) => { if (e.key === 'Enter') openEmbed(project.link); });
+                } else { // image fullscreen
+                    projectBlock.addEventListener('click', () => openImage(project.image));
+                    projectBlock.addEventListener('keyup', (e) => { if (e.key === 'Enter') openImage(project.image); });
                 }
 
                 projectsGrid.appendChild(projectBlock);
             });
         }
 
-        // Function to open the modal with the given iframe source
-        function openModal(src) {
+        function openEmbed(src) {
+            modalImageWrap.style.display = 'none';
+            modalIframeWrap.style.display = 'block';
             modalIframe.src = src;
+            openModal();
+        }
+        function openImage(src) {
+            modalIframe.src = '';
+            modalIframeWrap.style.display = 'none';
+            modalImageWrap.style.display = 'block';
+            modalImage.src = src;
+            openModal();
+        }
+        function openModal() {
             projectModal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling body when modal is open
+            document.body.style.overflow = 'hidden';
+            projectModal.setAttribute('aria-hidden', 'false');
         }
-
-        // Function to close the modal
         function closeModal() {
-            modalIframe.src = ''; // Clear iframe source to stop playback/resource usage
+            modalIframe.src = '';
+            modalImage.src = '';
             projectModal.classList.remove('active');
-            document.body.style.overflow = ''; // Restore body scrolling
+            document.body.style.overflow = '';
+            projectModal.setAttribute('aria-hidden', 'true');
         }
 
-        // Event listeners for modal close
         modalCloseButton.addEventListener('click', closeModal);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+        projectModal.addEventListener('click', (event) => { if (event.target === projectModal) closeModal(); });
 
-        // Close modal if clicking outside the content (on the overlay)
-        projectModal.addEventListener('click', (event) => {
-            if (event.target === projectModal) {
-                closeModal();
-            }
-        });
-
-        // Initialize project blocks on page load
         document.addEventListener('DOMContentLoaded', createProjectBlocks);
     </script>
 </body>
