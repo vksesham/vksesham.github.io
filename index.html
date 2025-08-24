@@ -85,13 +85,14 @@
     </div>
 
     <script>
+        const IMG_BASE = './images/';
         const projects = [
-            { title: "SmartCoin", description: "Coin-sized device with UWB/BLE (ISP3080-UX), BME690 environmental sensing, and ultra-low energy flash.", type: "embed", link: "https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=F92C8132-29F8-4192-BD90-7DB6DF94E32C&activeView=3D", image: "images/smartcoin.png" },
-            { title: "nRF54L15 miniDevKit", description: "Custom dev board featuring Nordic nRF54L15 SoC, designed in Altium Designer.", type: "embed", link: "https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=ED4A0AD6-383E-43F1-9697-7476525FDB97&activeView=3D", image: "images/nrf54_minidevkit.png" },
-            { title: "Self-Balancing Robot", description: "Two-wheeled robot with cascade PID, BLE control, and on-board sensing.", type: "image", link: "images/segway.png", image: "images/Segway.jpg" },
-            { title: "Fluidic Self-Assembly Automation Rig", description: "ESP32-S3-based FSA setup with heating, agitation control, and high-G accelerometry.", type: "image", link: "images/FSA.jpg", image: "images/FSA.jpg" },
-            { title: "USB-C Gigabit Ethernet Adapter", description: "WIP USB-C Gigabit Ethernet adapter with LAN8xx, USB-C, and RJ45 for wired connectivity.", type: "image", link: "images/placeholder.png", image: "images/placeholder.png" },
-            { title: "Project Placeholder", description: "Placeholder for future projects. Stay tuned!", type: "image", link: "images/placeholder.png", image: "images/placeholder.png" }
+            { title: "SmartCoin", description: "Coin-sized device with UWB/BLE (ISP3080-UX), BME690 environmental sensing, and ultra-low energy flash.", type: "embed", link: "https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=F92C8132-29F8-4192-BD90-7DB6DF94E32C&activeView=3D", image: "smartcoin.png" },
+            { title: "nRF54L15 miniDevKit", description: "Custom dev board featuring Nordic nRF54L15 SoC, designed in Altium Designer.", type: "embed", link: "https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=ED4A0AD6-383E-43F1-9697-7476525FDB97&activeView=3D", image: "nrf54_minidevkit.png" },
+            { title: "Self-Balancing Robot", description: "Two-wheeled robot with cascade PID, BLE control, and on-board sensing.", type: "image", link: "Segway.jpg", image: "Segway.jpg" },
+            { title: "Fluidic Self-Assembly Automation Rig", description: "ESP32-S3-based FSA setup with heating, agitation control, and high-G accelerometry.", type: "image", link: "FSA.jpg", image: "FSA.jpg" },
+            { title: "USB-C Gigabit Ethernet Adapter", description: "WIP USB-C Gigabit Ethernet adapter with LAN8xx, USB-C, and RJ45 for wired connectivity.", type: "image", link: "placeholder.png", image: "placeholder.png" },
+            { title: "Project Placeholder", description: "Placeholder for future projects. Stay tuned!", type: "image", link: "placeholder.png", image: "placeholder.png" }
         ];
 
         const projectsGrid = document.getElementById('projects-grid');
@@ -101,6 +102,33 @@
         const modalImage = document.getElementById('modal-image');
         const modalImageWrap = document.getElementById('modal-image-wrap');
         const modalCloseButton = document.getElementById('modal-close');
+
+        // Helper: try multiple filename variants (case/ext) and fall back to placeholder
+        const PLACEHOLDER = IMG_BASE + 'placeholder.png';
+        function buildCandidates(name) {
+            const base = IMG_BASE;
+            const stem = name.replace(/^.*\//,'');
+            const lc = stem.toLowerCase();
+            const noext = stem.replace(/\.(png|jpg|jpeg|gif|webp)$/i,'');
+            return [
+                base + stem,
+                base + lc,
+                base + noext + '.png',
+                base + noext + '.jpg',
+                base + noext + '.jpeg',
+                PLACEHOLDER
+            ];
+        }
+        function loadWithFallback(imgEl, name) {
+            const list = buildCandidates(name);
+            let i = 0;
+            function tryNext() {
+                if (i >= list.length) return; // give up
+                imgEl.src = list[i++];
+            }
+            imgEl.addEventListener('error', tryNext);
+            tryNext();
+        }
 
         function createProjectBlocks() {
             projects.forEach((project, idx) => {
@@ -116,7 +144,7 @@
                 img.loading = idx < 3 ? 'eager' : 'lazy';
                 img.decoding = 'async';
                 img.alt = project.title + ' thumbnail';
-                img.src = project.image;
+                loadWithFallback(img, project.image);
                 thumb.appendChild(img);
 
                 const body = document.createElement('div');
@@ -158,7 +186,7 @@
             modalIframe.src = '';
             modalIframeWrap.style.display = 'none';
             modalImageWrap.style.display = 'block';
-            modalImage.src = src;
+            loadWithFallback(modalImage, src);
             openModal();
         }
         function openModal() {
