@@ -1,212 +1,532 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vamsi Krishna Sesham (vksesham) — Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-    <style>
-        body {
-            font-family: 'Press Start 2P', cursive;
-            background-color: #2c3e50;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: scroll;
-        }
-        .pixel-font { font-family: 'Press Start 2P', cursive; }
-        .title-container {
-            background-color: #1a202c;
-            padding: 1rem 2rem;
-            border: 4px solid #fbd38d;
-            box-shadow: 8px 8px 0px 0px #8b5e1c;
-            margin-bottom: 2rem;
-            border-radius: 10px;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
-        }
-        .title-container:hover { transform: translate(-3px, -3px); box-shadow: 11px 11px 0px 0px #8b5e1c; }
-        .project-block {
-            background-color: #4a5568;
-            border: 3px solid #cbd5e0;
-            box-shadow: 6px 6px 0px 0px #2d3748;
-            transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
-            border-radius: 8px;
-            display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch;
-            text-align: left; color: #e2e8f0; cursor: pointer; overflow: hidden;
-        }
-        .project-block:hover { transform: translate(-3px, -3px); box-shadow: 9px 9px 0px 0px #2d3748; background-color: #616e7f; }
-        .project-thumb { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #2d3748; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .project-thumb img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
-        .project-body { padding: 1rem; display: grid; gap: .5rem; }
-        .project-block-title { color: #f6ad55; text-shadow: 2px 2px 0px #8b5e1c; }
-        .project-block-description { color: #cbd5e0; font-size: 0.75rem; line-height: 1.3; }
-        .modal-overlay { position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.8); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { background-color: #1a202c; padding: 10px; border-radius: 10px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); position: relative; width: 90%; max-width: 1920px; height: 90%; max-height: 1080px; display: flex; flex-direction: column; border: 4px solid #fbd38d; }
-        .modal-iframe-container, .modal-image-container { flex-grow: 1; position: relative; overflow: hidden; display: none; }
-        .modal-iframe { width: 100%; height: 100%; border: none; overflow: hidden; }
-        .modal-image { width: 100%; height: 100%; object-fit: contain; display: block; background:#000; }
-        .modal-close-button { position: absolute; top: 10px; right: 10px; background-color: #e53e3e; color: white; border: 2px solid #a0aec0; border-radius: 50%; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; cursor: pointer; z-index: 1001; transition: background-color 0.2s ease-in-out, transform 0.1s ease-out; font-family: 'Press Start 2P', cursive; box-shadow: 2px 2px 0px 0px #7b341e; }
-        .modal-close-button:hover { background-color: #c53030; transform: scale(1.05); }
-        @media (max-width: 768px) { .modal-content { width: 95%; height: 95%; } .modal-close-button { width: 25px; height: 25px; font-size: 1rem; top: 5px; right: 5px; } }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vamsi Krishna Sesham — Portfolio</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <style>
+    /* Use the Inter font family */
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    /* Set a scroll margin for sections to account for the fixed header */
+    section {
+      scroll-margin-top: 80px; /* Adjust based on header height */
+    }
+    /* Animation classes for elements revealed on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
-<body class="selection:bg-yellow-400 selection:text-black">
-    <a href="https://github.com/vksesham" target="_blank" rel="noopener" class="title-container">
-        <h1 class="pixel-font text-4xl sm:text-5xl lg:text-6xl text-white text-center tracking-wide uppercase">
-            Vamsi Krishna Sesham (vksesham)
-        </h1>
-        <p class="pixel-font text-sm sm:text-base text-gray-300 text-center mt-2">
-            My personal projects and experiments
-        </p>
-    </a>
+<body class="bg-white text-gray-800 antialiased">
 
-    <main id="projects-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl"></main>
-
-    <div id="project-modal" class="modal-overlay" aria-hidden="true">
-        <div class="modal-content" role="dialog" aria-modal="true" aria-label="Project Preview">
-            <button id="modal-close" class="modal-close-button" aria-label="Close">X</button>
-            <div id="modal-iframe-wrap" class="modal-iframe-container">
-                <iframe id="modal-iframe" class="modal-iframe" src="" allowfullscreen="true" scrolling="no"></iframe>
-            </div>
-            <div id="modal-image-wrap" class="modal-image-container">
-                <img id="modal-image" class="modal-image" src="" alt="Project image preview" />
-            </div>
+  <!-- ================================================== -->
+  <!-- Header & Navigation                                -->
+  <!-- ================================================== -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo / Name -->
+        <a href="#overview" class="font-extrabold tracking-tight text-gray-900 text-xl md:text-2xl">
+          Vamsi Krishna Sesham
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-2 text-base">
+          <a href="#overview" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 hover:text-purple-700 transition-colors">Overview</a>
+          <a href="#skills" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 hover:text-purple-700 transition-colors">Skills</a>
+          <a href="#experience" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 hover:text-purple-700 transition-colors">Experience</a>
+          <a href="#projects" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 hover:text-purple-700 transition-colors">Projects</a>
+        </nav>
+        
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="p-2 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500">
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+            <span class="sr-only">Open menu</span>
+          </button>
         </div>
+      </div>
     </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden">
+      <nav class="px-2 pt-2 pb-4 space-y-1 sm:px-3">
+        <a href="#overview" class="mobile-nav-link block px-4 py-3 rounded-lg hover:bg-purple-50 hover:text-purple-700 transition-colors">Overview</a>
+        <a href="#skills" class="mobile-nav-link block px-4 py-3 rounded-lg hover:bg-purple-50 hover:text-purple-700 transition-colors">Skills</a>
+        <a href="#experience" class="mobile-nav-link block px-4 py-3 rounded-lg hover:bg-purple-50 hover:text-purple-700 transition-colors">Experience</a>
+        <a href="#projects" class="mobile-nav-link block px-4 py-3 rounded-lg hover:bg-purple-50 hover:text-purple-700 transition-colors">Projects</a>
+      </nav>
+    </div>
+  </header>
 
-    <script>
-        const IMG_BASE = './Images/';
-        const projects = [
-            { title: "SmartCoin", description: "Coin-sized device with UWB/BLE (ISP3080-UX), BME690 environmental sensing, and ultra-low energy flash.", type: "embed", link: "https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=F92C8132-29F8-4192-BD90-7DB6DF94E32C&activeView=3D", image: "SmartCoin.png" },
-            { title: "nRF54L15 miniDevKit", description: "Custom dev board featuring Nordic nRF54L15 SoC, designed in Altium Designer.", type: "embed", link: "https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=ED4A0AD6-383E-43F1-9697-7476525FDB97&activeView=3D", image: "nrf54_minidevkit.png" },
-            { title: "Self-Balancing Robot", description: "Two-wheeled robot with cascade PID, BLE control, and on-board sensing.", type: "image", link: "Segway.jpg", image: "Segway.jpg" },
-            { title: "Fluidic Self-Assembly Automation Rig", description: "ESP32-S3-based FSA setup with heating, agitation control, and high-G accelerometry.", type: "image", link: "FSA.jpg", image: "FSA.jpg" },
-            { title: "USB-C Gigabit Ethernet Adapter", description: "WIP USB-C Gigabit Ethernet adapter with LAN8xx, USB-C, and RJ45 for wired connectivity.", type: "image", link: "placeholder.png", image: "placeholder.png" },
-            { title: "Project Placeholder", description: "Placeholder for future projects. Stay tuned!", type: "image", link: "placeholder.png", image: "placeholder.png" }
-        ];
+  <!-- Main Content -->
+  <main>
+    <!-- ================================================== -->
+    <!-- Overview (Hero / About) Section                    -->
+    <!-- ================================================== -->
+    <section id="overview" class="min-h-screen flex items-center pt-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-10 lg:gap-16 items-start">
+          <!-- Left Column: Photo + Details -->
+          <aside class="md:col-span-2 reveal">
+            <div class="w-56 h-56 mx-auto md:mx-0 rounded-full overflow-hidden ring-4 ring-purple-100 shadow-lg">
+              <img src="images/profile.jpeg" alt="Profile photo of Vamsi Krishna Sesham" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/224x224/E9D5FF/3730A3?text=VKS';" />
+            </div>
+            <div class="mt-8 space-y-5 text-base text-center md:text-left">
+              <div>
+                <h3 class="text-gray-500 uppercase tracking-wider text-xs font-semibold">Address</h3>
+                <p class="mt-1">Pfaffenwaldring 42D, Stuttgart, 70569, Germany</p>
+              </div>
+              <div>
+                <h3 class="text-gray-500 uppercase tracking-wider text-xs font-semibold">Email</h3>
+                <a href="mailto:vksesham@gmail.com" class="text-purple-700 hover:underline">vksesham@gmail.com</a>
+              </div>
+              <div>
+                <h3 class="text-gray-500 uppercase tracking-wider text-xs font-semibold">Phone</h3>
+                <a href="tel:+491234567890" class="text-purple-700 hover:underline">(+49) 15223760274</a>
+              </div>
+              <div>
+                <h3 class="text-gray-500 uppercase tracking-wider text-xs font-semibold">Social</h3>
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start mt-2">
+                  <a class="inline-flex items-center gap-2 text-gray-700 hover:text-purple-700 transition-colors" href="https://github.com/vksesham" target="_blank" rel="noopener" aria-label="GitHub Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2.17c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.35-1.76-1.35-1.76-1.1-.76.08-.75.08-.75 1.22.09 1.87 1.26 1.87 1.26 1.08 1.85 2.83 1.32 3.52 1.01.11-.8.42-1.32.76-1.63-2.66-.3-5.46-1.34-5.46-5.97 0-1.32.47-2.39 1.24-3.24-.13-.31-.54-1.56.12-3.26 0 0 1.01-.32 3.3 1.24.96-.27 1.99-.4 3.01-.4s2.05.14 3.01.4c2.29-1.56 3.3-1.24 3.3-1.24.66 1.7.25 2.95.12 3.26.77.85 1.24 1.93 1.24 3.24 0 4.64-2.8 5.66-5.47 5.96.43.37.81 1.1.81 2.23v3.3c0 .32.22.7.82.58A12 12 0 0 0 12 0z"/></svg>
+                    GitHub
+                  </a>
+                  <a class="inline-flex items-center gap-2 text-gray-700 hover:text-purple-700 transition-colors" href="https://www.linkedin.com/in/vksesham" target="_blank" rel="noopener" aria-label="LinkedIn Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452H17.2v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.447-2.136 2.944v5.662H9.075V9h3.111v1.561h.044c.434-.822 1.494-1.69 3.073-1.69 3.286 0 3.893 2.164 3.893 4.982v6.599zM5.337 7.433a1.804 1.804 0 1 1 0-3.608 1.804 1.804 0 0 1 0 3.608zM6.956 20.452H3.715V9h3.241v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.73v20.542C0 23.226.792 24 1.771 24h20.451C23.2 24 24 23.226 24 22.271V1.73C24 .774 23.2 0 22.222 0z"/></svg>
+                    LinkedIn
+                  </a>
+                </div>
+              </div>
+            </div>
+          </aside>
 
-        const projectsGrid = document.getElementById('projects-grid');
-        const projectModal = document.getElementById('project-modal');
-        const modalIframe = document.getElementById('modal-iframe');
-        const modalIframeWrap = document.getElementById('modal-iframe-wrap');
-        const modalImage = document.getElementById('modal-image');
-        const modalImageWrap = document.getElementById('modal-image-wrap');
-        const modalCloseButton = document.getElementById('modal-close');
+          <!-- Right Column: About Me -->
+          <div class="md:col-span-3 reveal">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tighter">Hardware & Embedded Systems Engineer</h1>
+            <p class="mt-6 text-lg leading-8 text-gray-700">
+              I design reliable electronics and write the firmware that brings them to life. My work spans multi-layer PCB design, embedded software (Zephyr/RTOS), sensor integration, and performance-driven prototyping. I enjoy clean schematics, readable code, and thoughtful documentation that helps teams move faster.
+            </p>
+            <div class="mt-8 inline-flex flex-wrap gap-4">
+              <a href="#projects" class="px-6 py-3 rounded-xl bg-purple-600 text-white font-semibold hover:bg-purple-700 transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">View Projects</a>
+              <a href="data:application/pdf;base64," download="Vamsi_Krishna_Sesham_CV.pdf" class="px-6 py-3 rounded-xl border border-purple-200 text-purple-700 font-semibold hover:bg-purple-50 transition">Download CV</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        // Helper: try multiple filename variants (case/ext) and fall back to placeholder
-        const PLACEHOLDER = IMG_BASE + 'placeholder.png';
-        function buildCandidates(name) {
-            const base = IMG_BASE;
-            const stem = name.replace(/^.*\//,'');
-            const lc = stem.toLowerCase();
-            const noext = stem.replace(/\.(png|jpg|jpeg|gif|webp)$/i,'');
-            return [
-                base + stem,
-                base + lc,
-                base + noext + '.png',
-                base + noext + '.jpg',
-                base + noext + '.jpeg',
-                PLACEHOLDER
-            ];
-        }
-        function loadWithFallback(imgEl, name) {
-            const list = buildCandidates(name);
-            let i = 0;
-            function tryNext() {
-                if (i >= list.length) return; // give up
-                imgEl.src = list[i++];
-            }
-            imgEl.addEventListener('error', tryNext);
-            tryNext();
-        }
+    <!-- ================================================== -->
+    <!-- Skills Section                                     -->
+    <!-- ================================================== -->
+    <section id="skills" class="min-h-screen flex items-center border-t border-gray-100 bg-purple-50/40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="text-center reveal">
+          <h2 class="text-3xl lg:text-4xl font-bold tracking-tight">Technical Skills</h2>
+          <p class="text-lg text-gray-600 mt-2 max-w-2xl mx-auto">Core strengths across hardware, firmware, automation, and documentation.</p>
+        </div>
 
-        function createProjectBlocks() {
-            projects.forEach((project, idx) => {
-                const projectBlock = document.createElement('article');
-                projectBlock.className = 'project-block';
-                projectBlock.setAttribute('tabindex', '0');
-                projectBlock.setAttribute('role', 'button');
-                projectBlock.setAttribute('aria-label', `${project.title}`);
+        <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Skill Card -->
+          <div class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <h3 class="font-semibold text-lg">🔧 PCB Design</h3>
+            <p class="text-gray-600 mt-2">High-speed, RF-aware layouts, stack-ups, DFM.</p>
+          </div>
+          <!-- Skill Card -->
+          <div class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <h3 class="font-semibold text-lg">📐 3D Modeling</h3>
+            <p class="text-gray-600 mt-2">Mechanical fit, enclosures, and assembly planning.</p>
+          </div>
+          <!-- Skill Card -->
+          <div class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <h3 class="font-semibold text-lg">🧵 Wire Bonding</h3>
+            <p class="text-gray-600 mt-2">Process setup, pad design, and reliability checks.</p>
+          </div>
+          <!-- Skill Card -->
+          <div class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <h3 class="font-semibold text-lg">💻 Firmware Development</h3>
+            <p class="text-gray-600 mt-2">nRF52/54, STM32, ESP32; Zephyr RTOS; drivers & HAL.</p>
+          </div>
+          <!-- Skill Card -->
+          <div class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <h3 class="font-semibold text-lg">🧪 Debugging</h3>
+            <p class="text-gray-600 mt-2">SWD/JTAG, logic analyzers, oscilloscopes, profiling.</p>
+          </div>
+          <!-- Skill Card -->
+          <div class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <h3 class="font-semibold text-lg">🔁 Version Control</h3>
+            <p class="text-gray-600 mt-2">GitFlow, code reviews, CI-ready repos.</p>
+          </div>
+          <!-- New Skill Card: Documentation -->
+          <div class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <h3 class="font-semibold text-lg">📝 Documentation</h3>
+            <p class="text-gray-600 mt-2">Clear READMEs, schematic annotations, and reproducible workflows.</p>
+          </div>
+          <!-- New Skill Card: Automation Scripting -->
+          <div class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <h3 class="font-semibold text-lg">⚙️ Automation Scripting</h3>
+            <p class="text-gray-600 mt-2">Python & MATLAB tooling, data processing, and build pipelines.</p>
+          </div>
+          <!-- New Skill Card: Simulations -->
+          <div class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <h3 class="font-semibold text-lg">🌡️ Simulations</h3>
+            <p class="text-gray-600 mt-2">PCB thermal simulations using ANSYS, enclosure airflow studies.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-                const thumb = document.createElement('div');
-                thumb.className = 'project-thumb';
-                const img = document.createElement('img');
-                img.loading = idx < 3 ? 'eager' : 'lazy';
-                img.decoding = 'async';
-                img.alt = project.title + ' thumbnail';
-                loadWithFallback(img, project.image);
-                thumb.appendChild(img);
+    <!-- ================================================== -->
+    <!-- Experience Section                                 -->
+    <!-- ================================================== -->
+    <section id="experience" class="min-h-screen flex items-center border-t border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="text-center reveal">
+          <h2 class="text-3xl lg:text-4xl font-bold tracking-tight">Work Experience</h2>
+        </div>
+        <div class="mt-12 max-w-3xl mx-auto grid gap-8">
+          <!-- Experience Item -->
+          <article class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 class="font-semibold text-lg text-purple-800">Master Thesis: Sensor Co—integration with low cross—interference</h3>
+              <span class="text-sm text-gray-500 font-medium">May 2025 — Present</span>
+            </div>
+            <p class="text-gray-600 mt-1">Bosch Sensortec GmbH — Reutlingen, Germany</p>
+            <p class="mt-3 text-gray-700">Investigated advanced PCB-level thermal management strategies for MEMS environmental sensors under passive cooling constraints. Conducted coupled thermal—fluid simulations in ANSYS Mechanical & Fluent and validated with prototype experiments to optimize copper pours, via farms, and enclosure airflow for sensor operation.</p>
+          </article>
+          <!-- Experience Item -->
+          <article class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 class="font-semibold text-lg text-purple-800">Working Student: Hardware & Firmware Engineer</h3>
+              <span class="text-sm text-gray-500 font-medium">July 2023 — March 2025</span>
+            </div>
+            <p class="text-gray-600 mt-1">Bosch Sensortec GmbH — Reutlingen, Germany</p>
+            <p class="mt-3 text-gray-700">Designed PCBs in Altium, developed custom firmware for Bosch Sensortec Application Boards, and created prototypes using Arduino Nicla Sense ME, SolidWorks, and FDM 3D printing. Delivered technical onboarding and internal trainings, optimized sensor demonstrators, and supported prototype presentation in Bosch Sensortec showroom.</p>
+          </article>
+          <!-- Experience Item -->
+          <article class="p-6 rounded-2xl border border-purple-100 bg-white shadow-lg reveal">
+            <div class="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 class="font-semibold text-lg text-purple-800">Internship: Prototyping with MEMS Sensors</h3>
+              <span class="text-sm text-gray-500 font-medium">February 2023 — June 2023</span>
+            </div>
+            <p class="text-gray-600 mt-1">Bosch Sensortec GmbH — Reutlingen, Germany</p>
+            <p class="mt-3 text-gray-700">Developed hardware/software demos with Arduino, Raspberry Pi, and 3D printing; automated data acquisition using MATLAB scripting. Contributed to Experience World by setting up demonstrators, documentation, and visitor support.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-                const body = document.createElement('div');
-                body.className = 'project-body';
+    <!-- ================================================== -->
+    <!-- Projects Section                                   -->
+    <!-- ================================================== -->
+    <section id="projects" class="min-h-screen flex items-center border-t border-gray-100 bg-purple-50/40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="text-center reveal">
+          <h2 class="text-3xl lg:text-4xl font-bold tracking-tight">Selected Projects</h2>
+          <p class="text-lg text-gray-600 mt-2 max-w-2xl mx-auto">Six selected works. Click a tile for details and links.</p>
+        </div>
 
-                const titleElement = document.createElement('h2');
-                titleElement.className = 'pixel-font project-block-title text-xl sm:text-2xl';
-                titleElement.textContent = project.title;
+        <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Project Tile -->
+          <div class="reveal">
+            <button class="project-tile group text-left w-full h-full" data-title="nRF54L15 miniDevKit" data-github="https://github.com/vksesham" data-altium="https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=ED4A0AD6-383E-43F1-9697-7476525FDB97&activeView=3D">
+              <div class="overflow-hidden rounded-2xl border border-purple-100 bg-white shadow-lg h-full transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
+                <img src="images/nrf54_minidevkit.png" alt="nRF54L15 miniDevKit" class="h-52 w-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/600x400/C4B5FD/3730A3?text=DevKit';"/>
+                <div class="p-5">
+                  <h3 class="font-semibold text-lg">nRF54L15 miniDevKit (Altium Project)</h3>
+                  <p class="text-gray-600 mt-2 text-sm">Custom 4-layer board with USB-C, IMU, RGB LED, and on-board CMSIS-DAP debugger.</p>
+                </div>
+              </div>
+            </button>
+          </div>
+          <!-- Project Tile -->
+          <div class="reveal">
+            <button class="project-tile group text-left w-full h-full" data-title="SmartCoin — UWB/BLE Tracker" data-github="https://github.com/vksesham/SmartCoin" data-altium="https://personal-viewer.365.altium.com/client/index.html?feature=embed&source=F92C8132-29F8-4192-BD90-7DB6DF94E32C&activeView=3D">
+              <div class="overflow-hidden rounded-2xl border border-purple-100 bg-white shadow-lg h-full transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
+                <img src="images/SmartCoin.png" alt="SmartCoin" class="h-52 w-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/600x400/A5B4FC/3730A3?text=SmartCoin';"/>
+                <div class="p-5">
+                  <h3 class="font-semibold text-lg">SmartCoin — UWB/BLE Tracker (Altium Project)</h3>
+                  <p class="text-gray-600 mt-2 text-sm">Coin-sized IoT/RTLS device with low-power firmware and compact RF layout.</p>
+                </div>
+              </div>
+            </button>
+          </div>
+          <!-- Project Tile -->
+          <div class="reveal">
+            <button class="project-tile group text-left w-full h-full" data-title="Self‑Balancing Robot" data-message="As this project was part of the Master/Company work, more details cannot be shared, but can be discussed over.">
+              <div class="overflow-hidden rounded-2xl border border-purple-100 bg-white shadow-lg h-full transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
+                <img src="images/Segway.png" alt="Self‑Balancing Robot" class="h-52 w-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/600x400/818CF8/EDE9FE?text=Robot';"/>
+                <div class="p-5">
+                  <h3 class="font-semibold text-lg">Self‑Balancing Robot</h3>
+                  <p class="text-gray-600 mt-2 text-sm">Cascade PID control on Nicla Sense ME with BLE remote and live telemetry.</p>
+                </div>
+              </div>
+            </button>
+          </div>
+          <!-- New Project Tile 4 -->
+          <div class="reveal">
+            <button class="project-tile group text-left w-full h-full" data-title="BLE-Controlled Robot Hack" data-message="As this project was part of the Master/Company work, more details cannot be shared, but can be discussed over.">
+              <div class="overflow-hidden rounded-2xl border border-purple-100 bg-white shadow-lg h-full transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
+                <img src="images/robot-hack.jpg" alt="BLE Controlled Robot" class="h-52 w-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/600x400/6D28D9/EDE9FE?text=BLE+Robot';"/>
+                <div class="p-5">
+                  <h3 class="font-semibold text-lg">BLE-Controlled Robot Hack</h3>
+                  <p class="text-gray-600 mt-2 text-sm">Hacked a commercial robot toy, implementing custom firmware on a Nicla Sense ME for BLE-based sensor control.</p>
+                </div>
+              </div>
+            </button>
+          </div>
+          <!-- New Project Tile 5 -->
+          <div class="reveal">
+            <button class="project-tile group text-left w-full h-full" data-title="Fluidic Self-Assembly Rig" data-message="As this project was part of the Master/Company work, more details cannot be shared, but can be discussed over.">
+              <div class="overflow-hidden rounded-2xl border border-purple-100 bg-white shadow-lg h-full transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
+                <img src="images/FSA.jpg" alt="Fluidic Self-Assembly Rig" class="h-52 w-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/600x400/5B21B6/E9D5FF?text=FSA+Rig';"/>
+                <div class="p-5">
+                  <h3 class="font-semibold text-lg">Fluidic Self-Assembly Rig</h3>
+                  <p class="text-gray-600 mt-2 text-sm">Built an automation setup to shake a tiny vial with millions of µLEDs for a Master's research project.</p>
+                </div>
+              </div>
+            </button>
+          </div>
+          <!-- New Project Tile 6 -->
+          <div class="reveal">
+            <button class="project-tile group text-left w-full h-full" data-title="Wafer-Level Pressure Sensor" data-message="As this project was part of the Master/Company work, more details cannot be shared, but can be discussed over.">
+              <div class="overflow-hidden rounded-2xl border border-purple-100 bg-white shadow-lg h-full transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
+                <img src="images/Pressure.png" alt="Wafer-Level Pressure Sensor" class="h-52 w-full object-cover transition-transform duration-300 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/600x400/4C1D95/F5D0FE?text=Sensor';"/>
+                <div class="p-5">
+                  <h3 class="font-semibold text-lg">Wafer-Level Pressure Sensor</h3>
+                  <p class="text-gray-600 mt-2 text-sm">Fabricated a resistive pressure sensor from a base Si wafer in a clean room and built a circuit for pressure reading.</p>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- ================================================== -->
+  <!-- Project Modal                                      -->
+  <!-- ================================================== -->
+  <div id="projectModal" class="hidden fixed inset-0 z-50 items-center justify-center p-4">
+    <!-- Modal Backdrop -->
+    <div class="fixed inset-0 bg-black/50" data-close></div>
+    <!-- Modal Content -->
+    <div class="relative bg-white rounded-2xl shadow-xl border border-purple-100 max-w-md w-full mx-auto p-6 z-10">
+      <button class="absolute top-3 right-3 p-2 rounded-full text-gray-500 hover:bg-gray-100 transition-colors" data-close aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <h3 id="modalTitle" class="text-xl font-bold">Project Title</h3>
+      <div id="modalBody" class="mt-6">
+        <!-- Links or message will be dynamically inserted here -->
+      </div>
+    </div>
+  </div>
 
-                const descriptionElement = document.createElement('p');
-                descriptionElement.className = 'pixel-font project-block-description';
-                descriptionElement.textContent = project.description;
+  <!-- ================================================== -->
+  <!-- Footer                                             -->
+  <!-- ================================================== -->
+  <footer class="py-10 text-center text-sm text-gray-500 border-t border-gray-100 bg-white">
+    <p>© <span id="year"></span> Vamsi Krishna Sesham. All rights reserved.</p>
+  </footer>
 
-                body.appendChild(titleElement);
-                body.appendChild(descriptionElement);
+  <!-- ================================================== -->
+  <!-- Scroll to Top Button                               -->
+  <!-- ================================================== -->
+  <button id="scrollToTopBtn" class="hidden fixed bottom-6 right-6 bg-purple-600 text-white p-3 rounded-full shadow-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-opacity duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+    </svg>
+    <span class="sr-only">Go to top</span>
+  </button>
+  
+  <!-- ================================================== -->
+  <!-- JavaScript Logic                                   -->
+  <!-- ================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
 
-                projectBlock.appendChild(thumb);
-                projectBlock.appendChild(body);
+      // --- Set current year in footer ---
+      document.getElementById('year').textContent = new Date().getFullYear();
 
-                if (project.type === 'embed') {
-                    projectBlock.addEventListener('click', () => openEmbed(project.link));
-                    projectBlock.addEventListener('keyup', (e) => { if (e.key === 'Enter') openEmbed(project.link); });
-                } else { // image fullscreen
-                    projectBlock.addEventListener('click', () => openImage(project.image));
-                    projectBlock.addEventListener('keyup', (e) => { if (e.key === 'Enter') openImage(project.image); });
-                }
+      // --- Mobile Menu Logic ---
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+      
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+      // Close mobile menu when a link is clicked
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+        });
+      });
 
-                projectsGrid.appendChild(projectBlock);
+      // --- Scroll Spy for Navigation Links ---
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5 // 50% of the section must be visible
+      };
+
+      const sectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              link.classList.remove('bg-purple-100', 'text-purple-800', 'font-semibold');
+              if (link.getAttribute('href') === `#${id}`) {
+                link.classList.add('bg-purple-100', 'text-purple-800', 'font-semibold');
+              }
             });
+          }
+        });
+      }, observerOptions);
+
+      sections.forEach(section => {
+        sectionObserver.observe(section);
+      });
+
+      // --- Project Modal Logic ---
+      const modal = document.getElementById('projectModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalBody = document.getElementById('modalBody');
+
+      function openModal({ title, github, paper, live, altium, message }) {
+        modalTitle.textContent = title || 'Project Details';
+        modalBody.innerHTML = ''; // Clear previous content
+
+        if (message) {
+          const messageElement = document.createElement('p');
+          messageElement.className = 'text-gray-600 text-center';
+          messageElement.textContent = message;
+          modalBody.appendChild(messageElement);
+        } else {
+            const linksContainer = document.createElement('div');
+            linksContainer.className = 'grid gap-3';
+            
+            const links = [
+              { href: github, text: 'View on GitHub', condition: github },
+              { href: altium, text: 'View in Altium Webviewer', condition: altium },
+              { href: paper, text: 'Read Research Paper', condition: paper },
+              { href: live, text: 'View Live Project', condition: live }
+            ];
+    
+            let hasLinks = false;
+            links.forEach(linkInfo => {
+              if (linkInfo.condition) {
+                hasLinks = true;
+                const linkElement = document.createElement('a');
+                linkElement.href = linkInfo.href;
+                linkElement.target = '_blank';
+                linkElement.rel = 'noopener';
+                linkElement.className = 'w-full text-center px-4 py-2.5 rounded-xl border border-purple-200 text-purple-700 font-semibold hover:bg-purple-50 transition';
+                linkElement.textContent = linkInfo.text;
+                
+                if(linkInfo.text.includes('GitHub')) {
+                    linkElement.className = 'w-full text-center px-4 py-2.5 rounded-xl bg-purple-600 text-white font-semibold hover:bg-purple-700 transition';
+                }
+                linksContainer.appendChild(linkElement);
+              }
+            });
+
+            if(hasLinks) {
+                modalBody.appendChild(linksContainer);
+            } else {
+                const noLinksMessage = document.createElement('p');
+                noLinksMessage.className = 'text-gray-600 text-center';
+                noLinksMessage.textContent = 'No external links are available for this project.';
+                modalBody.appendChild(noLinksMessage);
+            }
         }
 
-        function openEmbed(src) {
-            modalImageWrap.style.display = 'none';
-            modalIframeWrap.style.display = 'block';
-            modalIframe.src = src;
-            openModal();
-        }
-        function openImage(src) {
-            modalIframe.src = '';
-            modalIframeWrap.style.display = 'none';
-            modalImageWrap.style.display = 'block';
-            loadWithFallback(modalImage, src);
-            openModal();
-        }
-        function openModal() {
-            projectModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            projectModal.setAttribute('aria-hidden', 'false');
-        }
-        function closeModal() {
-            modalIframe.src = '';
-            modalImage.src = '';
-            projectModal.classList.remove('active');
-            document.body.style.overflow = '';
-            projectModal.setAttribute('aria-hidden', 'true');
-        }
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
 
-        modalCloseButton.addEventListener('click', closeModal);
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-        projectModal.addEventListener('click', (event) => { if (event.target === projectModal) closeModal(); });
+      function closeModal() {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = ''; // Restore scrolling
+      }
 
-        document.addEventListener('DOMContentLoaded', createProjectBlocks);
-    </script>
+      document.querySelectorAll('.project-tile').forEach(btn => {
+        btn.addEventListener('click', () => {
+          openModal({
+            title: btn.dataset.title,
+            github: btn.dataset.github,
+            paper: btn.dataset.paper,
+            live: btn.dataset.live,
+            altium: btn.dataset.altium,
+            message: btn.dataset.message,
+          });
+        });
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target.hasAttribute('data-close')) closeModal();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      // --- Scroll to Top Button Logic ---
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          scrollToTopBtn.classList.remove('hidden');
+        } else {
+          scrollToTopBtn.classList.add('hidden');
+        }
+      }, { passive: true });
+
+      scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      
+      // --- Animate elements on scroll ---
+      const revealElements = document.querySelectorAll('.reveal');
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            // Optional: unobserve after revealing to save resources
+            // revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      revealElements.forEach(el => {
+        revealObserver.observe(el);
+      });
+    });
+  </script>
 </body>
 </html>
+
+
